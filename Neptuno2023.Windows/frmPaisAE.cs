@@ -31,7 +31,7 @@ namespace Neptuno2023.Windows
         {
             DialogResult = DialogResult.Cancel;
         }
-
+        
         private void btnOk_Click(object sender, EventArgs e)
         {//instancio el validar datos *8A
             if (ValidarDatos())
