@@ -40,11 +40,11 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnCerrar = new System.Windows.Forms.ToolStripButton();
             this.panelInferior = new System.Windows.Forms.Panel();
+            this.labelCantidadRegistro = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelGrilla = new System.Windows.Forms.Panel();
             this.dgvDatos = new System.Windows.Forms.DataGridView();
             this.colPais = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.labelCantidadRegistro = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.panelInferior.SuspendLayout();
             this.panelGrilla.SuspendLayout();
@@ -90,6 +90,7 @@
             this.btnBorrar.Size = new System.Drawing.Size(43, 43);
             this.btnBorrar.Text = "Borrar";
             this.btnBorrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
             // 
             // btnEditar
             // 
@@ -168,6 +169,15 @@
             this.panelInferior.Size = new System.Drawing.Size(867, 79);
             this.panelInferior.TabIndex = 1;
             // 
+            // labelCantidadRegistro
+            // 
+            this.labelCantidadRegistro.AutoSize = true;
+            this.labelCantidadRegistro.Location = new System.Drawing.Point(165, 32);
+            this.labelCantidadRegistro.Name = "labelCantidadRegistro";
+            this.labelCantidadRegistro.Size = new System.Drawing.Size(13, 13);
+            this.labelCantidadRegistro.TabIndex = 1;
+            this.labelCantidadRegistro.Text = "0";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -209,15 +219,6 @@
             this.colPais.HeaderText = "Pais";
             this.colPais.Name = "colPais";
             this.colPais.ReadOnly = true;
-            // 
-            // labelCantidadRegistro
-            // 
-            this.labelCantidadRegistro.AutoSize = true;
-            this.labelCantidadRegistro.Location = new System.Drawing.Point(165, 32);
-            this.labelCantidadRegistro.Name = "labelCantidadRegistro";
-            this.labelCantidadRegistro.Size = new System.Drawing.Size(13, 13);
-            this.labelCantidadRegistro.TabIndex = 1;
-            this.labelCantidadRegistro.Text = "0";
             // 
             // frmPaises
             // 

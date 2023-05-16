@@ -65,7 +65,18 @@ namespace Neptuno2023.Servicios.Servicios
                 throw;
             }
         }
+        public void Borrar(int paisId)
+        {
+            try
+            {
+                _repositorioPaises.Borrar(paisId);
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
         public bool Existe(Pais pais)
         {
             try

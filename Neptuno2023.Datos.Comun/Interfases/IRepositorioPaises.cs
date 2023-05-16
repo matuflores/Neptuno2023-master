@@ -16,5 +16,6 @@ namespace Neptuno2023.Datos.Comun.Interfases
         void Editar (Pais pais);
         int GetCantidad();
         bool Existe(Pais pais);
+        void Borrar(int PaisId);
     }
 }

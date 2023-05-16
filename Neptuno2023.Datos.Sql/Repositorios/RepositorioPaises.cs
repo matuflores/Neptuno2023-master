@@ -20,6 +20,29 @@ namespace Neptuno2023.Datos.Sql.Repositorios
             cadenaDeConexion = ConfigurationManager.ConnectionStrings["MiConexion"].ToString();//aca instale el using configuration (*1), en conecctionstring le pongo entre corchetes el nombre de mi cadena de conexion
         }//cuando se crea el repo va a buscar la cadena de conexion
 
+        public void Borrar(int PaisId)
+        {
+            try
+            {
+                using (var conn=new SqlConnection(cadenaDeConexion))
+                {
+                    conn.Open();
+                    string deleteQuery = "DELETE FROM Paises WHERE PaisId=@PaisId";
+                    using (var comando=new SqlCommand(deleteQuery,conn))
+                    {
+                        comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                        comando.Parameters["@PaisId"].Value = PaisId;
+
+                        comando.ExecuteNonQuery();//este comando lo que hace es mandar el comando al Sql
+                    }
+
+                }
+            }
+            catch (Exception) 
+            {
+                throw;
+            }
+        }
         
         public void Agregar(Pais pais)//(paso 10) aca implemente los dos nuevo metodos de la capa IRepositorioPaises(*4)
         {

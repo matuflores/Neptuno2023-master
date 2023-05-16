@@ -153,5 +153,34 @@ namespace Neptuno2023.Windows
             }
 
         }
+
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            //para poder borrar tengo que haber seleccionado uno
+            if (dgvDatos.SelectedRows.Count==0)
+            {
+                return;//si no seleccione nada vuelve
+            }
+            var r = dgvDatos.SelectedRows[0];
+            Pais pais=(Pais)r.Tag;
+            try
+            {
+                //se debe controlar que no esten relacionado
+                _serviciosPaises.Borrar(pais.PaisId);
+                QuitarFila(r);
+                labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();
+                MessageBox.Show("Registro borrado","Mensaje", MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("El registro no se puede borrar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void QuitarFila(DataGridViewRow r)
+        {
+            dgvDatos.Rows.Remove(r);
+        }
     }
 }
