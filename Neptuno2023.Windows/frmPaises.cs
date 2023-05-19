@@ -161,26 +161,27 @@ namespace Neptuno2023.Windows
             {
                 return;//si no seleccione nada vuelve
             }
-            var r = dgvDatos.SelectedRows[0];
+            var r = dgvDatos.SelectedRows[0];//AL PONERLE EL NUMERO CERO, NO ME DEVUELVE UNA FILA PREESTABLECIDA SINO QUE ME DE TRAE LA QUE YO SELECCIONE EN ESE MOMENTO
             Pais pais=(Pais)r.Tag;
             try
             {
-                //se debe controlar que no esten relacionado
+                //se debe controlar que no esten relacionado con otras tablas (ver clase 17/5)
                 _serviciosPaises.Borrar(pais.PaisId);
                 QuitarFila(r);
-                labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();
+                labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();//Poner la canmtidad en este punto hace que una vez que eliminio el "pais" el contador se actualice
                 MessageBox.Show("Registro borrado","Mensaje", MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                MessageBox.Show("El registro no se puede borrar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //throw; si en el catch dejo (exception) y dejo el throw cuando tenga el error lo que va hacer es que el programa se detenga sin mostrarme en la pantalla pincripal el error
+                //MessageBox.Show("El registro no se puede borrar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error); si en el catch dejo (exception) y dejo este, me sale una ventana con lo que escribi entre comillas.
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//si en el catch dejo (exception ex) y pongo esto, me va a salir con la especificacion del detalle pero como una ventana
             }
         }
 
         private void QuitarFila(DataGridViewRow r)
         {
-            dgvDatos.Rows.Remove(r);
+            dgvDatos.Rows.Remove(r);//EL REMOVE ES UN METODO DE LA COLECCION DEL DATA GRID VIEW
         }
     }
 }

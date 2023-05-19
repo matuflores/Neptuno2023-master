@@ -20,7 +20,7 @@ namespace Neptuno2023.Datos.Sql.Repositorios
             cadenaDeConexion = ConfigurationManager.ConnectionStrings["MiConexion"].ToString();//aca instale el using configuration (*1), en conecctionstring le pongo entre corchetes el nombre de mi cadena de conexion
         }//cuando se crea el repo va a buscar la cadena de conexion
 
-        public void Borrar(int PaisId)
+        public void Borrar(int paisId)
         {
             try
             {
@@ -31,9 +31,9 @@ namespace Neptuno2023.Datos.Sql.Repositorios
                     using (var comando=new SqlCommand(deleteQuery,conn))
                     {
                         comando.Parameters.Add("@PaisId", SqlDbType.Int);
-                        comando.Parameters["@PaisId"].Value = PaisId;
+                        comando.Parameters["@PaisId"].Value = paisId;
 
-                        comando.ExecuteNonQuery();//este comando lo que hace es mandar el comando al Sql
+                        comando.ExecuteNonQuery();//esto lo que hace es mandar el comando al Sql. Se usa para el borrar
                     }
 
                 }
