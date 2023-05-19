@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Neptuno2023.Datos.Sql.Repositorios
 {
-    public class RepositorioPaises : IRepositorioPaises
+    public class RepositorioPaises : IRepositorioPaises //los repositorios son clases concretas porque implementan la interfaz
     {
         //private readonly IDbConnection _conn; //paso 5to: creo la cone //(*2)private readonly IDbConnection _conn;
         private string cadenaDeConexion; //

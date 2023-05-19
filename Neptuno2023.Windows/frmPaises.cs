@@ -166,6 +166,9 @@ namespace Neptuno2023.Windows
             try
             {
                 //se debe controlar que no esten relacionado con otras tablas (ver clase 17/5)
+                DialogResult dr=MessageBox.Show("¿Seguro que desea el eliminar el registro?","Confirmacion",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No) { return; }
                 _serviciosPaises.Borrar(pais.PaisId);
                 QuitarFila(r);
                 labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();//Poner la canmtidad en este punto hace que una vez que eliminio el "pais" el contador se actualice

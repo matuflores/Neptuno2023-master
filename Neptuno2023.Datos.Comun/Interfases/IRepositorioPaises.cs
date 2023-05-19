@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Neptuno2023.Datos.Comun.Interfases
 {
-    public interface IRepositorioPaises//siempre la interfaz va publica
+    public interface IRepositorioPaises//siempre la interfaz va publica, en la interfaz siempre defino metodos, no como lo hago
     {
         List<Pais> GetPaises();
         Pais GetPais(int id);//NO RECUERDO PORQUE
