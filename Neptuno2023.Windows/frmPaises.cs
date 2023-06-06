@@ -167,7 +167,7 @@ namespace Neptuno2023.Windows
             {
                 //se debe controlar que no esten relacionado con otras tablas (ver clase 17/5)
                 DialogResult dr=MessageBox.Show("¿Seguro que desea el eliminar el registro?","Confirmacion",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                 if (dr == DialogResult.No) { return; }
                 _serviciosPaises.Borrar(pais.PaisId);
                 QuitarFila(r);
