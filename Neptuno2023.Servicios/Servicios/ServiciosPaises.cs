@@ -89,5 +89,18 @@ namespace Neptuno2023.Servicios.Servicios
                 throw;
             }
         }
+
+        public Pais GetPaisPorId(int paisId)
+        {
+            try
+            {
+                return _repositorioPaises.GetPaisPorId(paisId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

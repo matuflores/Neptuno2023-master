@@ -163,18 +163,54 @@ namespace Neptuno2023.Datos.Sql.Repositorios
                     {//
                         while (reader.Read()) 
                         {
-                            var pais = new Pais()//construyop mi pais
-                            {
-                                PaisId = reader.GetInt32(0),//leo la primer columna en sql
-                                NombrePais = reader.GetString(1),//leo la segunda columna 
-                                RowVersion = (byte[])reader[2] //leo la tercera aca casteo
-                            };
+                            //esto lo anulo porque cree el metodo que construye pais mas abajo para usarlo en otro metodo
+                            //var pais = new Pais()//construyop mi pais
+                            //{
+                            //    PaisId = reader.GetInt32(0),//leo la primer columna en sql
+                            //    NombrePais = reader.GetString(1),//leo la segunda columna 
+                            //    RowVersion = (byte[])reader[2] //leo la tercera aca casteo
+                            //};
+                            var pais = ConstruirPais(reader);
                             lista.Add(pais);
                         }
                     }
                 }
                 return lista;
             }
+        }
+        public Pais ConstruirPais(SqlDataReader reader)//creo este metodo para reutilizar codigo
+        {
+            return new Pais()
+            {
+                PaisId = reader.GetInt32(0),//leo la primer columna en sql
+                NombrePais = reader.GetString(1),//leo la segunda columna 
+            };
+        }
+        public Pais GetPaisPorId(int paisId)//con esto leo el pais de cadaid
+        {
+            Pais pais = null;
+            using (var _conn=new SqlConnection(cadenaDeConexion))
+            {
+                _conn.Open();
+                string selectQuery = "SELECT PaisId, NombrePais FROM Paises WHERE PaisId=@PaisId";
+                using (var comando = new SqlCommand(selectQuery, _conn))
+                {
+                    comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                    comando.Parameters["@PaisId"].Value=paisId;
+
+                    using (var reader=comando.ExecuteReader())
+                    {
+                        if (reader.HasRows)//si tengo algun resultado entonces leo
+                        {
+                            reader.Read();//creo el pais (linea 182)
+                            pais = ConstruirPais(reader);
+                        }
+                    }
+
+                }
+
+            }
+            return pais;
         }
     }
 }
