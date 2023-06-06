@@ -116,14 +116,17 @@ namespace Neptuno2023.Windows
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            //PREGUNTAR A CARLOS PORQUE NO SE ME GUARDA LA EDICION
             if (dgvDatos.SelectedRows.Count==0)//LO PRIMERO TENGO QUE FIJARME SI TENGO UNA FILA SELECCIONADA
             {
                 return;
             }
+            var r = dgvDatos.SelectedRows[0];//si tengo una fila seleccionada me fijo cual es la filas
+            Pais pais = (Pais)r.Tag;//una vez en la fila obtengo el páis
+            Pais paisCopia =(Pais) pais.Clone();//ESTO DEVUELVE UN OBJET POR ESO TENGO QUE CASTEARLO (*F8)
             try
             {
-                var r = dgvDatos.SelectedRows[0];//si tengo una fila seleccionada me fijo cual es la filas
-                Pais pais = (Pais)r.Tag;//una vez en la fila obtengo el páis
+                
                 frmPaisAE frm = new frmPaisAE()
                 {
                     Text = "Editar Pais"
@@ -138,18 +141,27 @@ namespace Neptuno2023.Windows
                 //caso contrario si no aprete cancel es porque modifique un pais y lo debo agregar
                 pais = frm.GetPais();//tengo mi nuevo pais
                                      //el formulario le pide a servicios que lo guarde
-                _serviciosPaises.Guardar(pais);
-                //una vez que guardo el pais, tewngo que setear fila con el nuevo pais
-                SetearFila(r, pais);
-                MessageBox.Show("Pais Editado satisfactoriamente",
-                    "Mensaje",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!_serviciosPaises.Existe(pais))
+                {
+                    _serviciosPaises.Guardar(pais);
+                    //una vez que guardo el pais, tewngo que setear fila con el nuevo pais
+                    SetearFila(r, pais);
+                    MessageBox.Show("Pais Editado satisfactoriamente",
+                        "Mensaje",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    SetearFila(r, paisCopia);
+                    MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                
                 //como todo esto implica que debo acceder a la tabla deberia agregarlos con un try
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                SetearFila(r, paisCopia);
+                MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -168,7 +180,7 @@ namespace Neptuno2023.Windows
                 //se debe controlar que no esten relacionado con otras tablas (ver clase 17/5)
                 DialogResult dr=MessageBox.Show("¿Seguro que desea el eliminar el registro?","Confirmacion",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                if (dr == DialogResult.No) { return; }
+                if (dr == DialogResult.No) { return; }//
                 _serviciosPaises.Borrar(pais.PaisId);
                 QuitarFila(r);
                 labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();//Poner la canmtidad en este punto hace que una vez que eliminio el "pais" el contador se actualice

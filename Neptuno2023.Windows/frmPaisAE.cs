@@ -24,7 +24,7 @@ namespace Neptuno2023.Windows
             base.OnLoad(e);//agarra el metodo base lo trae y pone esto nuevo
             if (pais!=null)
             {
-                txtNombrePais.Text = pais.NombrePais;
+                txtNombrePais.Text = pais.NombrePais;//pongo el .text para que se vea la propiedad del textbox
             }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -66,9 +66,9 @@ namespace Neptuno2023.Windows
             return pais;//aca me va retornar el pais quye yo ingrese atraves dde este formulario, esta es la variable que tengo instanciada y referenciada arriba
         }
 
-        public void SetPais(Pais pais)
+        public void SetPais(Pais pais)//siempre public
         {//le paso un pais y ese pais lo tengo que poner en el pais definido arriba "private Pais pais;" linea 21
-            this.pais = pais;//
+            this.pais = pais;//this es el pais que esta en el formularios y el otro es el que me pasan
         }
 
     }

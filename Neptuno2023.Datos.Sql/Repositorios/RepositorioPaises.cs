@@ -60,28 +60,36 @@ namespace Neptuno2023.Datos.Sql.Repositorios
                 }
             }
         }
-
+        //NO SE ME GUARDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         public void Editar(Pais pais)
         {
-            using (var _conn = new SqlConnection(cadenaDeConexion))
+            try
             {
-                _conn.Open();
-                string updateQuery = "UPDATE Paises SET NombrePais=@NombrePais WHERE PaisId=@PaisId";//paso comando de actualizar
-                //los registros de una tabla tiene una clave principal y es la que uso para indicar que pais voy a actualizar
-                using (var comando =new SqlCommand(updateQuery,_conn))
+                using (var _conn = new SqlConnection(cadenaDeConexion))//el bloque using se encarga de cerrar la conexion
                 {
-                    using (var reader=comando.ExecuteReader())
-                    {//tengo que pasar dos parametros (las variables que tienen el @)
-                        comando.Parameters.Add("@NombrePais", SqlDbType.NVarChar);
-                        comando.Parameters["@NombrePais"].Value = pais.NombrePais;
+                    _conn.Open();
+                    string updateQuery = "UPDATE Paises SET NombrePais=@NombrePais WHERE PaisId=@PaisId";//paso comando de actualizar
+                                                                                                         //los registros de una tabla tiene una clave principal y es la que uso para indicar que pais voy a actualizar
+                    using (var comando = new SqlCommand(updateQuery, _conn))
+                    {
+                        using (var reader = comando.ExecuteReader())
+                        {//tengo que pasar dos parametros (las variables que tienen el @)
+                            comando.Parameters.Add("@NombrePais", SqlDbType.NVarChar);//
+                            comando.Parameters["@NombrePais"].Value = pais.NombrePais;
 
-                        comando.Parameters.Add("@PaisId", SqlDbType.Int);
-                        comando.Parameters["@PaisId"].Value=pais.PaisId;
-                        //ahora lo tengo que ejecutar
-                        comando.ExecuteNonQuery();
+                            comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                            comando.Parameters["@PaisId"].Value = pais.PaisId;
+                            //ahora lo tengo que mandar para ejecutar y que actualice
+                            comando.ExecuteNonQuery();//
 
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
