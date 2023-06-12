@@ -1,6 +1,7 @@
 ﻿using Neptuno2023.Entidades.Entidades;
 using Neptuno2023.Servicios.Interfases;
 using Neptuno2023.Servicios.Servicios;
+using Neptuno2023.Windows.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,33 +42,41 @@ namespace Neptuno2023.Windows
 
         private void MostrasDatosEnGrilla()
         {//busco el nombre de la grilla para cargar los datos - config eldatagriedview
-            dgvDatos.Rows.Clear();//anters de mostrar algo en grilla debo limpiarla
+
+            //para limpiar la grilla, ya que se reutiliza este codigo, lo agregue en los Helpers, por eso lo anulo
+            //dgvDatos.Rows.Clear();//anters de mostrar algo en grilla debo limpiarla
+            GripHelper.LimpiarGrilla(dgvDatos);//anule el anterior para usar este, y lo voy a usar cada vez que tenga que limpiar grilla (*126)
+
             foreach (var pais in lista)
             {
-                DataGridViewRow r = ConstruirFila();
-                SetearFila(r, pais);
-                AgregarFila(r);
+                //DataGridViewRow r = ConstruirFila();//anulo esto para implementar el helper
+                DataGridViewRow r = GripHelper.ConstruirFila(dgvDatos);//(*127)
+                GripHelper.SetearFila(r, pais);//(*128)
+                GripHelper.AgregarFila(dgvDatos,r);//(*129)aca para que funcione le debo pasar la grilla
             }
             
         }
 
-        private void AgregarFila(DataGridViewRow r)
-        {//ahora la celda que tiene valor se la agrego al DGV
-            dgvDatos.Rows.Add(r);
-        }
+        //ANULO ESTE METODO ´PORQUE YA ESTA EN EL HELPER
+        //private void AgregarFila(DataGridViewRow r)
+        //{//ahora la celda que tiene valor se la agrego al DGV
+        //    dgvDatos.Rows.Add(r);
+        //}
 
-        private void SetearFila(DataGridViewRow r, Pais pais)
-        {//uso este metodo para agregar los valores a la fila que cree previamente
-            r.Cells[colPais.Index].Value = pais.NombrePais;//asigno un valor a la cell de la fila
-            r.Tag = pais;//Tag para asignar una cadena de identificación a un objeto sin que afecte a otra configuración o atributo de propiedad
-        }
+        //ANULO ESTE METODO PORQUE YA ESTA EN EL HELPER
+        //private void SetearFila(DataGridViewRow r, Pais pais)
+        //{//uso este metodo para agregar los valores a la fila que cree previamente
+        //    r.Cells[colPais.Index].Value = pais.NombrePais;//asigno un valor a la cell de la fila
+        //    r.Tag = pais;//Tag para asignar una cadena de identificación a un objeto sin que afecte a otra configuración o atributo de propiedad
+        //}
 
-        private DataGridViewRow ConstruirFila()
-        {
-            DataGridViewRow r= new DataGridViewRow();//creo una nueva fila
-            r.CreateCells(dgvDatos);
-            return r;
-        }
+        //ANULO ESTE METODO PORQUE YA ESTA EN EL HELPER
+        //private DataGridViewRow ConstruirFila()
+        //{
+        //    DataGridViewRow r= new DataGridViewRow();//creo una nueva fila
+        //    r.CreateCells(dgvDatos);
+        //    return r;
+        //}
 
         private void btnNuevo_Click(object sender, EventArgs e)//paso 5(agregar)
         {
@@ -84,9 +93,10 @@ namespace Neptuno2023.Windows
                     if (!_serviciosPaises.Existe(pais))//*9A
                     {
                         _serviciosPaises.Guardar(pais);//este metodo esta instanciado en el "IServicioPaises" y lo implemento por Herencia en "ServiciosPaises" y en esete metodo uso el agregar del repositori que es donde abro la conexion con sql y paso el parametro para agregarlo a sql
-                        DataGridViewRow r = ConstruirFila();//construyo la fila del pais nuevo para cargarlo a la grilla
-                        SetearFila(r, pais);//paso la fila y que dato voy agregar
-                        AgregarFila(r);//agrego la fila a la grilla
+                        
+                        DataGridViewRow r = GripHelper.ConstruirFila(dgvDatos);//(*127)construyo la fila del pais nuevo para cargarlo a la grilla
+                        GripHelper.SetearFila(r, pais);//(*128)paso la fila y que dato voy agregar
+                        GripHelper.AgregarFila(dgvDatos, r);//(*129)agrego la fila a la grilla
                         labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();//lo pongo aca para que me actualice la cantidad registro
                         MessageBox.Show("Registro agregado satifactoriamente",
                             "Mensaje",
@@ -145,22 +155,22 @@ namespace Neptuno2023.Windows
                 {
                     _serviciosPaises.Guardar(pais);
                     //una vez que guardo el pais, tewngo que setear fila con el nuevo pais
-                    SetearFila(r, pais);
+                    GripHelper.SetearFila(r, pais);//(*128)
                     MessageBox.Show("Pais Editado satisfactoriamente",
                         "Mensaje",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    SetearFila(r, paisCopia);
+                    GripHelper.SetearFila(r, paisCopia);//(*128)
                     MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 
                 //como todo esto implica que debo acceder a la tabla deberia agregarlos con un try
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                SetearFila(r, paisCopia);
+                GripHelper.SetearFila(r, paisCopia);//(*128)
                 MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 

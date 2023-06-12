@@ -1,6 +1,7 @@
 ﻿using Neptuno2023.Entidades.Entidades;
 using Neptuno2023.Servicios.Interfases;
 using Neptuno2023.Servicios.Servicios;
+using Neptuno2023.Windows.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,36 +43,40 @@ namespace Neptuno2023.Windows
 
         private void MostrasDatosEnGrilla()
         {//busco el nombre de la grilla para cargar los datos - config eldatagriedview
-            dgvDatos.Rows.Clear();//anters de mostrar algo en grilla debo limpiarla
+
+            //dgvDatos.Rows.Clear();//anters de mostrar algo en grilla debo limpiarla
+            GripHelper.LimpiarGrilla(dgvDatos);//(*126)
+
             foreach (var ciudad in lista)
             {
-                DataGridViewRow r = ConstruirFila();
-                SetearFila(r, ciudad);
-                AgregarFila(r);
+                DataGridViewRow r = GripHelper.ConstruirFila(dgvDatos);//(*127)
+                GripHelper.SetearFila(r, ciudad);//(*128)
+                GripHelper.AgregarFila(dgvDatos, r);//(*129)
             }
 
         }
 
-        private void AgregarFila(DataGridViewRow r)
-        {//ahora la celda que tiene valor se la agrego al DGV
-            dgvDatos.Rows.Add(r);
-        }
+        //private void AgregarFila(DataGridViewRow r)
+        //{//ahora la celda que tiene valor se la agrego al DGV
+        //    dgvDatos.Rows.Add(r);
+        //}
 
-        private void SetearFila(DataGridViewRow r, Ciudad ciudad)
-        {//uso este metodo para agregar los valores a la fila que cree previamente
-            r.Cells[colNombreCiudad.Index].Value=ciudad.NombreCiudad;
-            //r.Cells[colNombrePaises.Index].Value = ciudad.PaisId;//asigno un valor a la cell de la fila
-            //anule el r.Cells de arriba porque ahora no me va a mostrar el ID sino el nombre del pais gracias a los metodos GetPaisPorId
-            r.Cells[colNombrePaises.Index].Value = ciudad.Pais.NombrePais;
-            r.Tag = ciudad;//Tag para asignar una cadena de identificación a un objeto sin que afecte a otra configuración o atributo de propiedad
-        }
+        //ANULO PORQUE ESTA EN EL HELPER
+        //private void SetearFila(DataGridViewRow r, Ciudad ciudad)
+        //{//uso este metodo para agregar los valores a la fila que cree previamente
+        //    r.Cells[colNombreCiudad.Index].Value=ciudad.NombreCiudad;
+        //    //r.Cells[colNombrePaises.Index].Value = ciudad.PaisId;//asigno un valor a la cell de la fila
+        //    //anule el r.Cells de arriba porque ahora no me va a mostrar el ID sino el nombre del pais gracias a los metodos GetPaisPorId
+        //    r.Cells[colNombrePaises.Index].Value = ciudad.Pais.NombrePais;
+        //    r.Tag = ciudad;//Tag para asignar una cadena de identificación a un objeto sin que afecte a otra configuración o atributo de propiedad
+        //}
 
-        private DataGridViewRow ConstruirFila()
-        {
-            DataGridViewRow r = new DataGridViewRow();//creo una nueva fila
-            r.CreateCells(dgvDatos);
-            return r;
-        }
+        //private DataGridViewRow ConstruirFila()
+        //{
+        //    DataGridViewRow r = new DataGridViewRow();//creo una nueva fila
+        //    r.CreateCells(dgvDatos);
+        //    return r;
+        //}
 
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
