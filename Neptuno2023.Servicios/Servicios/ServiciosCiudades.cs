@@ -23,12 +23,28 @@ namespace Neptuno2023.Servicios.Servicios
         }
         public void Borrar(int ciudadId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _repositorioCiudades.Borrar(ciudadId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public bool Existe(Ciudad ciudad)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _repositorioCiudades.Existe(ciudad);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public int GetCantidad()
@@ -65,7 +81,22 @@ namespace Neptuno2023.Servicios.Servicios
 
         public void Guardar(Ciudad ciudad)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (ciudad.CiudadId==0)
+                {
+                    _repositorioCiudades.Agregar(ciudad);
+                }
+                else
+                {
+                    _repositorioCiudades.Editar(ciudad);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Neptuno2023.Entidades.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -19,22 +20,115 @@ namespace Neptuno2023.Datos.Sql.Repositorios
         }
         public void Agregar(Ciudad ciudad)
         {
-            throw new NotImplementedException();
+            using (var _conn = new SqlConnection(cadenaDeConexion))
+            {
+                _conn.Open();//abro la conexion //
+                var insertQuery = "INSERT INTO Ciudades (NombreCiudad, PaisId) VALUES (@NombreCiudad, @PaisId); SELECT SCOPE_IDENTITY()";//esta es la "cadena de comanddo" y lo que hace es insertar el Pais y me devuelve el id que acaba de generar.-cuando hago un insert solo le paso los datos que no se generan automaticamen, es ddecir el id y la rowversion no es necesario porq se generan solo
+                using (var comando = new SqlCommand(insertQuery, _conn)) //aca creo el comando                                            /select scope_identity() me traigo el indice
+                {//en insert paso parametros que tengo que ddefinir
+                    comando.Parameters.Add("@NombreCiudad", SqlDbType.NVarChar);//aca ddigo te voy pasar un parametro que se llama nombre pais y que es tipo nvarchar
+                    comando.Parameters["@NombreCiudad"].Value = ciudad.NombreCiudad;//primero defini el nombre y el tipo de dato que va a ser y aca le asigno el valor al parametro
+
+                    comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                    comando.Parameters["@PaisId"].Value = ciudad.PaisId;
+
+                    int id = Convert.ToInt32(comando.ExecuteScalar());//el ExecuteScalar devuelve un objeto y como lo que me va a traer a mis es el id y es de tipo entero lo tengo que castear
+                    ciudad.CiudadId = id;//aca me traigo el id del nuevo pais que acabo de agregar/modifica*(8)
+                }
+            }
         }
 
         public void Borrar(int ciudadId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var conn = new SqlConnection(cadenaDeConexion))
+                {
+                    conn.Open();
+                    string deleteQuery = "DELETE FROM Ciudades WHERE CiudadId=@CiudadId";
+                    using (var comando = new SqlCommand(deleteQuery, conn))
+                    {
+                        comando.Parameters.Add("@CiudadId", SqlDbType.Int);
+                        comando.Parameters["@CiudadId"].Value = ciudadId;
+
+                        comando.ExecuteNonQuery();//esto lo que hace es mandar el comando al Sql. Se usa para el borrar
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("REFERENCE"))
+                {
+                    throw new Exception("Registro relacionado... Baja Denegada");
+                }
+            }
         }
 
         public void Editar(Ciudad ciudad)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var _conn = new SqlConnection(cadenaDeConexion))//el bloque using se encarga de cerrar la conexion
+                {
+                    _conn.Open();//      
+                    string updateQuery = "UPDATE Ciudades SET NombreCiudad=@NombreCiudad, PaisId=@PaisId WHERE CiudadId=@CiudadId";//paso comando de actualizar
+                                                                                                         //los registros de una tabla tiene una clave principal y es la que uso para indicar que pais voy a actualizar
+                    using (var comando = new SqlCommand(updateQuery, _conn))
+                    {
+                        comando.Parameters.Add("@NombreCiudad", SqlDbType.NChar);//
+                        comando.Parameters["@NombreCiudad"].Value = ciudad.NombreCiudad;
+
+                        comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                        comando.Parameters["@PaisId"].Value = ciudad.PaisId;
+
+                        comando.Parameters.Add("@CiudadId",SqlDbType.Int);
+                        comando.Parameters["@CiudadId"].Value = ciudad.CiudadId;
+
+                        //ahora lo tengo que mandar para ejecutar y que actualice
+                        comando.ExecuteNonQuery();//
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public bool Existe(Ciudad ciudad)
         {
-            throw new NotImplementedException();
+            int cantidad;
+            using (var _conn=new SqlConnection(cadenaDeConexion))
+            {
+                _conn.Open();
+                string selectQuery;
+                if (ciudad.CiudadId==0)
+                {
+                    selectQuery = "SELECT COUNT(*) FROM Ciudades WHERE NombreCiudad=@NombreCiudad AND PaisId=@PaisId";
+                }
+                else
+                {
+                    selectQuery = "SELECT COUNT(*) FROM Ciudades WHERE NombreCiudad=@NombreCiudad AND PaisId=@PaisId AND CiudadId!=@CiudadId";
+                }
+                using (var comando=new SqlCommand(selectQuery,_conn))
+                {
+                    comando.Parameters.Add("@NombreCiudad", SqlDbType.NVarChar);
+                    comando.Parameters["@NombreCiudad"].Value = ciudad.NombreCiudad;
+
+                    comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                    comando.Parameters["@PaisId"].Value = ciudad.PaisId;
+
+                    if (ciudad.CiudadId!=0)
+                    {
+                        comando.Parameters.Add("@CiudadId", SqlDbType.Int);
+                        comando.Parameters["@CiudadId"].Value=ciudad.CiudadId;
+                    }
+                    cantidad=Convert.ToInt32(comando.ExecuteScalar());
+                }
+            }
+            return cantidad > 0;
         }
         
         public int GetCantidad()

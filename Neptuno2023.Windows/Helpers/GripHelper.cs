@@ -33,8 +33,8 @@ namespace Neptuno2023.Windows.Helpers
                     r.Cells[0].Value = pais.NombrePais;
                     break;
                 case Ciudad ciudad:
-                    r.Cells[0].Value = ciudad.NombreCiudad;
-                    r.Cells[1].Value = ciudad.Pais.NombrePais;
+                    r.Cells[0].Value = ciudad.Pais.NombrePais;
+                    r.Cells[1].Value = ciudad.NombreCiudad;
                     break;
                 case Categoria categoria:
                     r.Cells[0].Value = categoria.NombreCategoria;//a la fila le digo que voy a seleccionar la celda/columna que le indico y uso el index para la posicion, uso el value para decirle que va a tomar el valor que le paso. del objeto categoria le voy asignar el valor del atributo que le indicop
@@ -48,6 +48,11 @@ namespace Neptuno2023.Windows.Helpers
         public static void AgregarFila(DataGridView dgv, DataGridViewRow r)
         {
             dgv.Rows.Add(r);
+        }
+
+        public static void QuitarFila(DataGridView dgv, DataGridViewRow r)
+        {
+            dgv.Rows.Remove(r);
         }
     }
 }

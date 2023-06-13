@@ -60,7 +60,6 @@ namespace Neptuno2023.Datos.Sql.Repositorios
                 }
             }
         }
-        //NO SE ME GUARDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         public void Editar(Pais pais)
         {
             try

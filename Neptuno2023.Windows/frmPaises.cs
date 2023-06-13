@@ -126,7 +126,7 @@ namespace Neptuno2023.Windows
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            //PREGUNTAR A CARLOS PORQUE NO SE ME GUARDA LA EDICION
+            
             if (dgvDatos.SelectedRows.Count==0)//LO PRIMERO TENGO QUE FIJARME SI TENGO UNA FILA SELECCIONADA
             {
                 return;
@@ -168,10 +168,10 @@ namespace Neptuno2023.Windows
                 
                 //como todo esto implica que debo acceder a la tabla deberia agregarlos con un try
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 GripHelper.SetearFila(r, paisCopia);//(*128)
-                MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -192,7 +192,7 @@ namespace Neptuno2023.Windows
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                 if (dr == DialogResult.No) { return; }//
                 _serviciosPaises.Borrar(pais.PaisId);
-                QuitarFila(r);
+                GripHelper.QuitarFila(dgvDatos,r);//(*130)
                 labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();//Poner la canmtidad en este punto hace que una vez que eliminio el "pais" el contador se actualice
                 MessageBox.Show("Registro borrado","Mensaje", MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
@@ -204,9 +204,10 @@ namespace Neptuno2023.Windows
             }
         }
 
-        private void QuitarFila(DataGridViewRow r)
-        {
-            dgvDatos.Rows.Remove(r);//EL REMOVE ES UN METODO DE LA COLECCION DEL DATA GRID VIEW
-        }
+        //ANULO ESTE METODO PORQUE YA ESTA EN EL HELPER
+        //private void QuitarFila(DataGridViewRow r)
+        //{
+        //    dgvDatos.Rows.Remove(r);//EL REMOVE ES UN METODO DE LA COLECCION DEL DATA GRID VIEW
+        //}
     }
 }
