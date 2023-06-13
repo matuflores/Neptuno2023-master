@@ -14,5 +14,6 @@ namespace Neptuno2023.Servicios.Interfases
         int GetCantidad();//
         bool Existe(Ciudad ciudad);//
         void Borrar(int ciudadId);//
+        List<Ciudad> Filtrar(Pais pais);
     }
 }

@@ -28,18 +28,19 @@ namespace Neptuno2023.Windows
         
         private void frmCiudades_Load(object sender, EventArgs e)
         {
-            try
-            {
-                cantidad=_serviciosCiudades.GetCantidad();
-                labelCantidadRegistro.Text = cantidad.ToString();
-                lista = _serviciosCiudades.GetCiudades();
-                MostrasDatosEnGrilla();
-            }
-            catch (Exception)
-            {
+            RecargarGrilla();//como reutilizo el codigo en otro lugar, lo anulo a todo lo de abajo y uso el metodo
+            //try
+            //{
+            //    cantidad=_serviciosCiudades.GetCantidad();
+            //    labelCantidadRegistro.Text = cantidad.ToString();
+            //    lista = _serviciosCiudades.GetCiudades();
+            //    MostrasDatosEnGrilla();
+            //}
+            //catch (Exception)
+            //{
 
-                throw;
-            }
+            //    throw;
+            //}
         }
 
         private void MostrasDatosEnGrilla()
@@ -195,6 +196,54 @@ namespace Neptuno2023.Windows
                 //throw; si en el catch dejo (exception) y dejo el throw cuando tenga el error lo que va hacer es que el programa se detenga sin mostrarme en la pantalla pincripal el error
                 //MessageBox.Show("El registro no se puede borrar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error); si en el catch dejo (exception) y dejo este, me sale una ventana con lo que escribi entre comillas.
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//si en el catch dejo (exception ex) y pongo esto, me va a salir con la especificacion del detalle pero como una ventana
+            }
+        }
+
+        private void toolStripButtonFiltrar_Click(object sender, EventArgs e)
+        {
+            frmSeleccionarPais frm = new frmSeleccionarPais()
+            {
+                Text = "Seleccione un Pais"
+            };
+            DialogResult dr=frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel)
+            {
+                return;
+            }
+            try
+            {
+                var pais = frm.GetPais();
+                lista = _serviciosCiudades.Filtrar(pais);//este metodo no existe asique debo crearlo
+                toolStripButtonFiltrar.BackColor = Color.Orange;//esto lo que hace es darle color al btn cuando esta seleccioando
+                MostrasDatosEnGrilla();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void toolStripButtonActualizar_Click(object sender, EventArgs e)
+        {
+            RecargarGrilla();
+            toolStripButtonFiltrar.BackColor = Color.White;
+        }
+
+        private void RecargarGrilla()
+        {
+            //es lo mismo que hago cuando el formulario se carga (Load)
+            try
+            {
+                cantidad = _serviciosCiudades.GetCantidad();
+                labelCantidadRegistro.Text = cantidad.ToString();
+                lista = _serviciosCiudades.GetCiudades();
+                MostrasDatosEnGrilla();
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

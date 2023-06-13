@@ -156,9 +156,7 @@ namespace Neptuno2023.Windows
                     _serviciosPaises.Guardar(pais);
                     //una vez que guardo el pais, tewngo que setear fila con el nuevo pais
                     GripHelper.SetearFila(r, pais);//(*128)
-                    MessageBox.Show("Pais Editado satisfactoriamente",
-                        "Mensaje",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Pais Editado satisfactoriamente", "Mensaje",MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {

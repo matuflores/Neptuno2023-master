@@ -88,7 +88,7 @@ namespace Neptuno2023.Datos.Sql.Repositorios
             }
         }
 
-        public bool Existe(Pais pais)
+        public bool Existe(Pais pais)//se usa tanto para cuando se edita como si de guarda uno nuevo
         {
             try
             {
@@ -96,12 +96,25 @@ namespace Neptuno2023.Datos.Sql.Repositorios
                 using (var conn=new SqlConnection(cadenaDeConexion))
                 {
                     conn.Open();
-                    string selectQuery = "SELECT COUNT(*) FROM Paises WHERE NombrePais=@NombrePais";//me tengo que fijar si existe el pais
+                    string selectQuery;
+                    if (pais.PaisId==0)
+                    {
+                        selectQuery = "SELECT COUNT(*) FROM Paises WHERE NombrePais=@NombrePais";//me tengo que fijar si existe el pais
+                    }
+                    else
+                    {
+                        selectQuery = "SELECT COUNT(*) FROM Paises WHERE NombrePais=@NombrePais AND PaisId!=@PaisId";
+                    }
                     using (var comando=new SqlCommand(selectQuery,conn))
                     {
                         comando.Parameters.Add("@NombrePais", SqlDbType.NVarChar);
                         comando.Parameters["@NombrePais"].Value = pais.NombrePais;
 
+                        if (pais.PaisId!=0)//
+                        {
+                            comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                            comando.Parameters["@PaisId"].Value = pais.PaisId;
+                        }
                         contador=(int)comando.ExecuteScalar();
                     }
                 }

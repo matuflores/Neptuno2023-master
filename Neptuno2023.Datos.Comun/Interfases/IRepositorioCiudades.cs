@@ -15,5 +15,6 @@ namespace Neptuno2023.Datos.Comun.Interfases
         int GetCantidad();
         bool Existe(Ciudad ciudad);
         void Borrar(int ciudadId);
+        List<Ciudad> Filtrar(Pais pais);
     }
 }

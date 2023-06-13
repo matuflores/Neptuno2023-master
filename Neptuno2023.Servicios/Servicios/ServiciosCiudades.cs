@@ -47,6 +47,26 @@ namespace Neptuno2023.Servicios.Servicios
             }
         }
 
+        public List<Ciudad> Filtrar(Pais pais)
+        {
+            try
+            {
+                //esto me tiro error cuando quise filtrar porque filtro por pais y me traigo una lista de ciudades que no terngo el pais adentro
+                //return _repositorioCiudades.Filtrar(pais);//hago siempre lo mismo, lo creo en el cs de form, creo el metodo en el servicio y del servicio lo implemento en el iservicio y ahora al repo
+                var lista = _repositorioCiudades.Filtrar(pais);//cada repo es responsable de una tabla, por eso tengo que ir al repo de pais para que me lo cargue en ciudades
+                foreach (var item in lista) //TODO EL FOREACH ESTA EXPLICADO ABAJO EN EL METODDO GETCIUDADES
+                {
+                    item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId);
+                }
+                return lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public int GetCantidad()
         {
             try
