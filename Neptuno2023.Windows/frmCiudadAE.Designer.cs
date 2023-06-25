@@ -37,6 +37,7 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.errorProviderCiudad = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnAgregarPais = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderCiudad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,6 +104,18 @@
             // 
             this.errorProviderCiudad.ContainerControl = this;
             // 
+            // btnAgregarPais
+            // 
+            this.btnAgregarPais.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregarPais.Image = global::Neptuno2023.Windows.Properties.Resources.add_25px;
+            this.btnAgregarPais.Location = new System.Drawing.Point(408, 36);
+            this.btnAgregarPais.Name = "btnAgregarPais";
+            this.btnAgregarPais.Size = new System.Drawing.Size(36, 35);
+            this.btnAgregarPais.TabIndex = 4;
+            this.btnAgregarPais.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAgregarPais.UseVisualStyleBackColor = true;
+            this.btnAgregarPais.Click += new System.EventHandler(this.btnAgregarPais_Click);
+            // 
             // frmCiudadAE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -110,6 +123,7 @@
             this.ClientSize = new System.Drawing.Size(484, 276);
             this.ControlBox = false;
             this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnAgregarPais);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.textBoxCiudad);
             this.Controls.Add(this.cbPaises);
@@ -135,5 +149,6 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ErrorProvider errorProviderCiudad;
+        private System.Windows.Forms.Button btnAgregarPais;
     }
 }

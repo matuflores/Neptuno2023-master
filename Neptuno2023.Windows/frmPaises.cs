@@ -24,14 +24,25 @@ namespace Neptuno2023.Windows
         private readonly IServiciosPaises _serviciosPaises;//como windddows trabaja con servicio creo la variable para que lea desde servicio y una vez que se abre el frm se abre el servicio(*1)
         private List<Pais> lista;//tengo que tener un contenedor para que el servicio me pueda poner los datos que yo les pido
 
+        //Para paginado
+        int paginaActual = 1;
+        int registros = 0;
+        int paginas = 0;
+        int registrosPorPagina = 10;
         private void frmPaises_Load(object sender, EventArgs e)
         {//cuando se carga se va a fijar si el repo tiene datos, si los tiene los desplegas
             try//un bloque try para separar el código que podría verse afectado por una excepción
-            {//la variable lista, le pide los paises al 
-                lista = _serviciosPaises.GetPaises();//paso 9: cargar los datos en la grilla es leer los datos de servicio y darselo a la listya y a su vez generar el metodo para mostrarlos
+            {//la variable lista, le pide los paises al servicio
+
+                //Anulo esto por el paginado -->   *lista = _serviciosPaises.GetPaises();*  //paso 9: cargar los datos en la grilla es leer los datos de servicio y darselo a la listya y a su vez generar el metodo para mostrarlos
+                registros=_serviciosPaises.GetCantidad();//cuenta los registros (cant de paises)
+                paginas = FormHelper.CalcularPaginas(registros, registrosPorPagina);
+
+                MostrarPaginado();//Anule lo de abajo porque como se repite en los cuatro BTN hice un metodo para reducir codigo
+                ////MostrarPaginado();-->  *lista=_serviciosPaises.GetPaisesPorPagina(registrosPorPagina,paginaActual);*
                 //*7A
-                labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();//esto me devuelvo un int pero el label es text asique lo tengo que castear
-                MostrasDatosEnGrilla();
+                //lo anulo porque uso el atributo "registros" -->  *labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();*    //esto me devuelvo un int pero el label es text asique lo tengo que castear
+                ////MostrarPaginado();-->  *MostrasDatosEnGrilla();*
             }
             catch (Exception)
             {
@@ -39,6 +50,23 @@ namespace Neptuno2023.Windows
                 throw;
             }
         }
+
+        //ANULO PORQUE LO USO EN EL HELPER
+        //private int CalcularPaginas(int registros, int registrosPorPagina)
+        //{
+        //    if (registros<registrosPorPagina)
+        //    {
+        //        return 1;
+        //    }
+        //    else if (registros%registrosPorPagina==0)//sino fuera asi. SI EL RESTO ME DA CERO (NO DA CON COMA)
+        //    {
+        //        return registros / registrosPorPagina;
+        //    }
+        //    else
+        //    {
+        //        return registros / registrosPorPagina + 1;
+        //    }
+        //}
 
         private void MostrasDatosEnGrilla()
         {//busco el nombre de la grilla para cargar los datos - config eldatagriedview
@@ -54,6 +82,9 @@ namespace Neptuno2023.Windows
                 GripHelper.SetearFila(r, pais);//(*128)
                 GripHelper.AgregarFila(dgvDatos,r);//(*129)aca para que funcione le debo pasar la grilla
             }
+            labelCantidadRegistro.Text=registros.ToString();
+            labelNumPagina.Text=paginaActual.ToString();    
+            labelPagTotal.Text=paginas.ToString();
             
         }
 
@@ -200,6 +231,47 @@ namespace Neptuno2023.Windows
                 //MessageBox.Show("El registro no se puede borrar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error); si en el catch dejo (exception) y dejo este, me sale una ventana con lo que escribi entre comillas.
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//si en el catch dejo (exception ex) y pongo esto, me va a salir con la especificacion del detalle pero como una ventana
             }
+        }
+
+        private void btnPagSiguiente_Click(object sender, EventArgs e)
+        {
+            if (paginaActual==paginas)
+            {
+                return;
+            }
+            paginaActual++;//aca lo que hace el BTN es que cuando le hago clic a la paginaActual le incremente el valor, este valor nuevo se lo paso al metodo para que me muestre los valores de la siguiente pagina
+
+            MostrarPaginado();//Anule lo de abajo porque como se repite en los cuatro BTN hice un metodo para reducir codigo
+            //lista = _serviciosPaises.GetPaisesPorPagina(registrosPorPagina, paginaActual);
+            //MostrasDatosEnGrilla();
+        }
+
+        private void btnPagAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual == 1)
+            {
+                return;
+            }
+            paginaActual--;//aca lo que hace el BTN es que cuando le hago clic a la paginaActual le reste el valor, este valor nuevo se lo paso al metodo para que me muestre los valores de la siguiente pagina
+            MostrarPaginado();
+        }
+
+        private void btnPagUltima_Click(object sender, EventArgs e)
+        {
+            paginaActual=paginas;//aca le digo que la pagina actual debe ser la ultima, "paginas" tiene la cantidad de paginas a tomar este valor la paginaActual va a ser la ultima
+            MostrarPaginado();
+        }
+
+        private void btnPagPrimera_Click(object sender, EventArgs e)
+        {
+            paginaActual = 1;
+            MostrarPaginado();
+        }
+
+        private void MostrarPaginado()
+        {
+            lista = _serviciosPaises.GetPaisesPorPagina(registrosPorPagina, paginaActual);
+            MostrasDatosEnGrilla();
         }
 
         //ANULO ESTE METODO PORQUE YA ESTA EN EL HELPER

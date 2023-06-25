@@ -20,6 +20,12 @@ namespace Neptuno2023.Windows
         private readonly IServiciosCiudades _serviciosCiudades;
         private List<Ciudad> lista;
         int cantidad = 0;
+
+        //Para paginado
+        int paginaActual = 1;
+        int registros = 0;
+        int paginas = 0;
+        int registrosPorPagina = 10;
         public frmCiudades()
         {
             InitializeComponent();
@@ -28,6 +34,7 @@ namespace Neptuno2023.Windows
         
         private void frmCiudades_Load(object sender, EventArgs e)
         {
+
             RecargarGrilla();//como reutilizo el codigo en otro lugar, lo anulo a todo lo de abajo y uso el metodo
             //try
             //{
@@ -55,6 +62,9 @@ namespace Neptuno2023.Windows
                 GripHelper.SetearFila(r, ciudad);//(*128)
                 GripHelper.AgregarFila(dgvDatos, r);//(*129)
             }
+            labelCantidadRegistro.Text = registros.ToString();
+            labelNumPagina.Text = paginaActual.ToString();
+            labelPagTotal.Text = paginas.ToString();
 
         }
 
@@ -87,11 +97,11 @@ namespace Neptuno2023.Windows
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            frmCiudadAE frm= new frmCiudadAE()
+            frmCiudadAE frm= new frmCiudadAE() //////////----------
             {
                 Text="Agregar Ciudad"
             };
-            DialogResult dr= frm.ShowDialog(this);
+            DialogResult dr= frm.ShowDialog(this);//////////----------
             if (dr == DialogResult.Cancel)
             {
                 return;
@@ -107,7 +117,7 @@ namespace Neptuno2023.Windows
                     var r = GripHelper.ConstruirFila(dgvDatos);
                     GripHelper.SetearFila(r,ciudad);
                     GripHelper.AgregarFila(dgvDatos, r);
-
+                    labelCantidadRegistro.Text = _serviciosCiudades.GetCantidad().ToString();
                     MessageBox.Show("Registro Agregado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -235,16 +245,64 @@ namespace Neptuno2023.Windows
             //es lo mismo que hago cuando el formulario se carga (Load)
             try
             {
-                cantidad = _serviciosCiudades.GetCantidad();
-                labelCantidadRegistro.Text = cantidad.ToString();
-                lista = _serviciosCiudades.GetCiudades();
-                MostrasDatosEnGrilla();
+                registros = _serviciosCiudades.GetCantidad();//cuenta los registros (cant de paises)
+                paginas = FormHelper.CalcularPaginas(registros, registrosPorPagina);
+                MostrarPaginado();
+                //MostrarPaginado();-->  *lista = _serviciosCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);*
+                //cantidad = _serviciosCiudades.GetCantidad();            Anulo todo esto porque uso el paginado
+                //labelCantidadRegistro.Text = cantidad.ToString();
+                //lista = _serviciosCiudades.GetCiudades();
+                //MostrarPaginado();-->  *//MostrasDatosEnGrilla();*
             }
             catch (Exception)
             {
-
+                
                 throw;
             }
+        }
+
+        
+
+        private void btnPagSiguiente_Click(object sender, EventArgs e)
+        {
+            if (paginaActual == paginas)
+            {
+                return;
+            }
+            paginaActual++;//aca lo que hace el BTN es que cuando le hago clic a la paginaActual le incremente el valor, este valor nuevo se lo paso al metodo para que me muestre los valores de la siguiente pagina
+
+            MostrarPaginado();//Anule lo de abajo porque como se repite en los cuatro BTN hice un metodo para reducir codigo
+            //lista = _serviciosCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
+            //MostrasDatosEnGrilla();
+
+        }
+
+        private void btnPagAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual == 1)
+            {
+                return;
+            }
+            paginaActual--;//aca lo que hace el BTN es que cuando le hago clic a la paginaActual le reste el valor, este valor nuevo se lo paso al metodo para que me muestre los valores de la siguiente pagina
+            MostrarPaginado();
+        }
+
+        private void btnPagUltima_Click(object sender, EventArgs e)
+        {
+            paginaActual = paginas;//aca le digo que la pagina actual debe ser la ultima, "paginas" tiene la cantidad de paginas a tomar este valor la paginaActual va a ser la ultima
+            MostrarPaginado();
+        }
+
+        private void btnPagPrimera_Click(object sender, EventArgs e)
+        {
+            paginaActual = 1;
+            MostrarPaginado();
+        }
+
+        private void MostrarPaginado()
+        {
+            lista = _serviciosCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
+            MostrasDatosEnGrilla();
         }
     }
 }

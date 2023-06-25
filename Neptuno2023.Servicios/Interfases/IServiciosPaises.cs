@@ -11,7 +11,7 @@ namespace Neptuno2023.Servicios.Interfases
     {
         void Guardar(Pais pais);
         List<Pais> GetPaises();
-
+        List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual);
         int GetCantidad();
         bool Existe(Pais pais);
         void Borrar(int paisId);

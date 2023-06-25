@@ -95,6 +95,7 @@
       <DependentUpon>frmSeleccionarPais.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CombosHelper.cs" />
+    <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\GripHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,6 +177,21 @@
       <Project>{971a7949-e7cf-4a88-b63c-4a6b24669b6f}</Project>
       <Name>Neptuno2023.Servicios</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_to_35px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\circled_play_35px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next_page_35px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause_button_35px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_25px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

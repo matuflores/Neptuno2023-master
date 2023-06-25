@@ -160,30 +160,38 @@ namespace Neptuno2023.Datos.Sql.Repositorios
 
         public List<Pais> GetPaises()//luego de hacer la conexion voy hacer que me traiga la lista de paises 
         {
-            List<Pais> lista=new List<Pais>();
-            using (var _conn = new SqlConnection(cadenaDeConexion)) //aca creo realmente la conexion, despues de hacer esto le saque el "readonly" a IDbConnection (preguntar porque(*2)) //-->tengo la conexion
-            { //lo que hace el using me permite una vez que uso la conexion automaticamente cierra la conexion y me libera los recurso //-->tengo el string del comando
-                _conn.Open();//TENGO QUE ABRIR LA CONEXION
-                var selectQuery = "SELECT * FROM Paises ORDER BY NombrePais"; //este SELECT es la sentencia de SQL que a mi me va a permitir traer todos los paises en orden//-->creo el comando
-                using (var comando= new SqlCommand(selectQuery,_conn))//-->ahora tengo que ejecutar
-                {
-                    using (var reader=comando.ExecuteReader()) //me va a traer un conjunto de registros que yo tengo que leer
-                    {//
-                        while (reader.Read()) 
-                        {
-                            //esto lo anulo porque cree el metodo que construye pais mas abajo para usarlo en otro metodo
-                            //var pais = new Pais()//construyop mi pais
-                            //{
-                            //    PaisId = reader.GetInt32(0),//leo la primer columna en sql
-                            //    NombrePais = reader.GetString(1),//leo la segunda columna 
-                            //    RowVersion = (byte[])reader[2] //leo la tercera aca casteo
-                            //};
-                            var pais = ConstruirPais(reader);
-                            lista.Add(pais);
+            try
+            {
+                List<Pais> lista = new List<Pais>();
+                using (var _conn = new SqlConnection(cadenaDeConexion)) //aca creo realmente la conexion, despues de hacer esto le saque el "readonly" a IDbConnection (preguntar porque(*2)) //-->tengo la conexion
+                { //lo que hace el using me permite una vez que uso la conexion automaticamente cierra la conexion y me libera los recurso //-->tengo el string del comando
+                    _conn.Open();//TENGO QUE ABRIR LA CONEXION
+                    var selectQuery = "SELECT * FROM Paises ORDER BY NombrePais"; //este SELECT es la sentencia de SQL que a mi me va a permitir traer todos los paises en orden//-->creo el comando
+                    using (var comando = new SqlCommand(selectQuery, _conn))//-->ahora tengo que ejecutar
+                    {
+                        using (var reader = comando.ExecuteReader()) //me va a traer un conjunto de registros que yo tengo que leer
+                        {//
+                            while (reader.Read())
+                            {
+                                //esto lo anulo porque cree el metodo que construye pais mas abajo para usarlo en otro metodo
+                                //var pais = new Pais()//construyop mi pais
+                                //{
+                                //    PaisId = reader.GetInt32(0),//leo la primer columna en sql
+                                //    NombrePais = reader.GetString(1),//leo la segunda columna 
+                                //    RowVersion = (byte[])reader[2] //leo la tercera aca casteo
+                                //};
+                                var pais = ConstruirPais(reader);
+                                lista.Add(pais);
+                            }
                         }
                     }
+                    return lista;
                 }
-                return lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
         public Pais ConstruirPais(SqlDataReader reader)//creo este metodo para reutilizar codigo
@@ -219,6 +227,43 @@ namespace Neptuno2023.Datos.Sql.Repositorios
 
             }
             return pais;
+        }
+
+        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual)
+        {
+            try
+            {//esto es lo mismo que el metodo GetPaises solo con modificaciones...
+                List<Pais> lista = new List<Pais>();
+                using (var _conn = new SqlConnection(cadenaDeConexion)) 
+                { //le pongo el @ delante del select para poder hacer salto de linea
+                    _conn.Open();
+                    var selectQuery = @"SELECT PaisId, NombrePais FROM Paises 
+                                        ORDER BY NombrePais 
+                                        OFFSET @cantidadDeRegistros ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";//saltame tantos registros y traeme los siguientes registros
+                    using (var comando = new SqlCommand(selectQuery, _conn))
+                    {
+                        comando.Parameters.Add("@cantidadDeRegistros", SqlDbType.Int);
+                        comando.Parameters["@cantidadDeRegistros"].Value = cantidad*(paginaActual-1);//para que no me salte ningun registro hago la cuenta esa
+
+                        comando.Parameters.Add("@cantidadPorPagina", SqlDbType.Int);
+                        comando.Parameters["@cantidadPorPagina"].Value = cantidad;
+                        using (var reader = comando.ExecuteReader())
+                        {//
+                            while (reader.Read())
+                            {
+                                var pais = ConstruirPais(reader);
+                                lista.Add(pais);
+                            }
+                        }
+                    }
+                    return lista;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

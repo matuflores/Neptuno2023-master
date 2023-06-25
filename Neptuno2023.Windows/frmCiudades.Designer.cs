@@ -46,6 +46,14 @@
             this.dgvDatos = new System.Windows.Forms.DataGridView();
             this.colNombrePaises = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNombreCiudad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelNumPagina = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelPagTotal = new System.Windows.Forms.Label();
+            this.btnPagPrimera = new System.Windows.Forms.Button();
+            this.btnPagAnterior = new System.Windows.Forms.Button();
+            this.btnPagSiguiente = new System.Windows.Forms.Button();
+            this.btnPagUltima = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.panelInferior.SuspendLayout();
             this.panelGrilla.SuspendLayout();
@@ -67,7 +75,7 @@
             this.toolStripButton7});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 46);
+            this.toolStrip1.Size = new System.Drawing.Size(867, 46);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -164,18 +172,26 @@
             // 
             // panelInferior
             // 
+            this.panelInferior.Controls.Add(this.btnPagUltima);
+            this.panelInferior.Controls.Add(this.btnPagSiguiente);
+            this.panelInferior.Controls.Add(this.btnPagAnterior);
+            this.panelInferior.Controls.Add(this.btnPagPrimera);
+            this.panelInferior.Controls.Add(this.labelPagTotal);
+            this.panelInferior.Controls.Add(this.label4);
+            this.panelInferior.Controls.Add(this.labelNumPagina);
+            this.panelInferior.Controls.Add(this.label2);
             this.panelInferior.Controls.Add(this.labelCantidadRegistro);
             this.panelInferior.Controls.Add(this.label1);
             this.panelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelInferior.Location = new System.Drawing.Point(0, 366);
+            this.panelInferior.Location = new System.Drawing.Point(0, 400);
             this.panelInferior.Name = "panelInferior";
-            this.panelInferior.Size = new System.Drawing.Size(800, 84);
+            this.panelInferior.Size = new System.Drawing.Size(867, 95);
             this.panelInferior.TabIndex = 1;
             // 
             // labelCantidadRegistro
             // 
             this.labelCantidadRegistro.AutoSize = true;
-            this.labelCantidadRegistro.Location = new System.Drawing.Point(155, 32);
+            this.labelCantidadRegistro.Location = new System.Drawing.Point(155, 22);
             this.labelCantidadRegistro.Name = "labelCantidadRegistro";
             this.labelCantidadRegistro.Size = new System.Drawing.Size(13, 13);
             this.labelCantidadRegistro.TabIndex = 1;
@@ -184,7 +200,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(35, 32);
+            this.label1.Location = new System.Drawing.Point(35, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(114, 13);
             this.label1.TabIndex = 0;
@@ -196,7 +212,7 @@
             this.panelGrilla.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelGrilla.Location = new System.Drawing.Point(0, 46);
             this.panelGrilla.Name = "panelGrilla";
-            this.panelGrilla.Size = new System.Drawing.Size(800, 320);
+            this.panelGrilla.Size = new System.Drawing.Size(867, 354);
             this.panelGrilla.TabIndex = 2;
             // 
             // dgvDatos
@@ -212,7 +228,7 @@
             this.dgvDatos.Name = "dgvDatos";
             this.dgvDatos.ReadOnly = true;
             this.dgvDatos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDatos.Size = new System.Drawing.Size(800, 320);
+            this.dgvDatos.Size = new System.Drawing.Size(867, 354);
             this.dgvDatos.TabIndex = 0;
             // 
             // colNombrePaises
@@ -229,17 +245,97 @@
             this.colNombreCiudad.Name = "colNombreCiudad";
             this.colNombreCiudad.ReadOnly = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(38, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Página:";
+            // 
+            // labelNumPagina
+            // 
+            this.labelNumPagina.AutoSize = true;
+            this.labelNumPagina.Location = new System.Drawing.Point(92, 54);
+            this.labelNumPagina.Name = "labelNumPagina";
+            this.labelNumPagina.Size = new System.Drawing.Size(13, 13);
+            this.labelNumPagina.TabIndex = 3;
+            this.labelNumPagina.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(111, 54);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(19, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "de";
+            // 
+            // labelPagTotal
+            // 
+            this.labelPagTotal.AutoSize = true;
+            this.labelPagTotal.Location = new System.Drawing.Point(136, 54);
+            this.labelPagTotal.Name = "labelPagTotal";
+            this.labelPagTotal.Size = new System.Drawing.Size(13, 13);
+            this.labelPagTotal.TabIndex = 5;
+            this.labelPagTotal.Text = "0";
+            // 
+            // btnPagPrimera
+            // 
+            this.btnPagPrimera.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagPrimera.Image = global::Neptuno2023.Windows.Properties.Resources.back_to_35px;
+            this.btnPagPrimera.Location = new System.Drawing.Point(323, 22);
+            this.btnPagPrimera.Name = "btnPagPrimera";
+            this.btnPagPrimera.Size = new System.Drawing.Size(50, 45);
+            this.btnPagPrimera.TabIndex = 6;
+            this.btnPagPrimera.UseVisualStyleBackColor = true;
+            this.btnPagPrimera.Click += new System.EventHandler(this.btnPagPrimera_Click);
+            // 
+            // btnPagAnterior
+            // 
+            this.btnPagAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagAnterior.Image = global::Neptuno2023.Windows.Properties.Resources.pause_button_35px;
+            this.btnPagAnterior.Location = new System.Drawing.Point(395, 22);
+            this.btnPagAnterior.Name = "btnPagAnterior";
+            this.btnPagAnterior.Size = new System.Drawing.Size(50, 45);
+            this.btnPagAnterior.TabIndex = 6;
+            this.btnPagAnterior.UseVisualStyleBackColor = true;
+            this.btnPagAnterior.Click += new System.EventHandler(this.btnPagAnterior_Click);
+            // 
+            // btnPagSiguiente
+            // 
+            this.btnPagSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagSiguiente.Image = global::Neptuno2023.Windows.Properties.Resources.circled_play_35px;
+            this.btnPagSiguiente.Location = new System.Drawing.Point(462, 22);
+            this.btnPagSiguiente.Name = "btnPagSiguiente";
+            this.btnPagSiguiente.Size = new System.Drawing.Size(50, 45);
+            this.btnPagSiguiente.TabIndex = 6;
+            this.btnPagSiguiente.UseVisualStyleBackColor = true;
+            this.btnPagSiguiente.Click += new System.EventHandler(this.btnPagSiguiente_Click);
+            // 
+            // btnPagUltima
+            // 
+            this.btnPagUltima.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagUltima.Image = global::Neptuno2023.Windows.Properties.Resources.next_page_35px;
+            this.btnPagUltima.Location = new System.Drawing.Point(536, 22);
+            this.btnPagUltima.Name = "btnPagUltima";
+            this.btnPagUltima.Size = new System.Drawing.Size(50, 45);
+            this.btnPagUltima.TabIndex = 6;
+            this.btnPagUltima.UseVisualStyleBackColor = true;
+            this.btnPagUltima.Click += new System.EventHandler(this.btnPagUltima_Click);
+            // 
             // frmCiudades
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(867, 495);
             this.ControlBox = false;
             this.Controls.Add(this.panelGrilla);
             this.Controls.Add(this.panelInferior);
             this.Controls.Add(this.toolStrip1);
-            this.MaximumSize = new System.Drawing.Size(816, 489);
-            this.MinimumSize = new System.Drawing.Size(816, 489);
+            this.MaximumSize = new System.Drawing.Size(883, 534);
+            this.MinimumSize = new System.Drawing.Size(883, 534);
             this.Name = "frmCiudades";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmCiudades";
@@ -275,5 +371,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colNombreCiudad;
         private System.Windows.Forms.Label labelCantidadRegistro;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelPagTotal;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelNumPagina;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnPagUltima;
+        private System.Windows.Forms.Button btnPagSiguiente;
+        private System.Windows.Forms.Button btnPagAnterior;
+        private System.Windows.Forms.Button btnPagPrimera;
     }
 }

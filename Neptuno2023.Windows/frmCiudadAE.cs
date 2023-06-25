@@ -1,4 +1,5 @@
 ﻿using Neptuno2023.Entidades.Entidades;
+using Neptuno2023.Servicios.Servicios;
 using Neptuno2023.Windows.Helpers;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,50 @@ namespace Neptuno2023.Windows
         public void SetCiudad(Ciudad ciudad)
         {
             this.ciudad = ciudad;
+        }
+
+        private void btnAgregarPais_Click(object sender, EventArgs e)
+        {//
+            var _serviciosPaises = new ServiciosPaises();
+            frmPaisAE frm = new frmPaisAE()
+            {
+                Text = "Agregar Nuevo Pais"
+            };
+            DialogResult dr = frm.ShowDialog(this);//creo un dialogoresult en el que pregunto si quiere agregar un nuevo pais
+            if (dr == DialogResult.OK)//en caso que la repuesta sea "OK" entonces ahora deberia abrir el formulario
+            {//paso 8(agregar)
+                try//le tengo que pedir al frm de paisae que me pase el pais para podder agregarlo 
+                {
+                    var pais = frm.GetPais();
+                    if (!_serviciosPaises.Existe(pais))//*9A
+                    {
+                        _serviciosPaises.Guardar(pais);//este metodo esta instanciado en el "IServicioPaises" y lo implemento por Herencia en "ServiciosPaises" y en esete metodo uso el agregar del repositori que es donde abro la conexion con sql y paso el parametro para agregarlo a sql
+
+                        //COMO NO TENGO QUE MOSTRAR NADA EN GRILLA ESTO LO ANULO.
+                        //DataGridViewRow r = GripHelper.ConstruirFila(dgvDatos);//(*127)construyo la fila del pais nuevo para cargarlo a la grilla
+                        //GripHelper.SetearFila(r, pais);//(*128)paso la fila y que dato voy agregar
+                        //GripHelper.AgregarFila(dgvDatos, r);//(*129)agrego la fila a la grilla
+                        //labelCantidadRegistro.Text = _serviciosPaises.GetCantidad().ToString();//lo pongo aca para que me actualice la cantidad registro
+
+                        MessageBox.Show("Registro agregado satifactoriamente",
+                            "Mensaje",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Registro ya existe",
+                            "Mensaje",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                CombosHelper.CargarComboPaises(ref cbPaises);//Una vez que termino todo el proceso lo agrego al combo box
+            }
         }
     }
 }

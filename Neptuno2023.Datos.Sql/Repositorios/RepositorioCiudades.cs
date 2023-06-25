@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Neptuno2023.Datos.Sql.Repositorios
 {
@@ -220,6 +221,43 @@ namespace Neptuno2023.Datos.Sql.Repositorios
             }
             
 
+        }
+
+        public List<Ciudad> GetCiudadesPorPagina(int cantidad, int paginaActual)
+        {
+            try
+            {
+                List<Ciudad> lista = new List<Ciudad>();
+                using (var _conn = new SqlConnection(cadenaDeConexion))
+                {
+                    _conn.Open();
+                    string selectQuery = @"SELECT CiudadId, PaisId, NombreCiudad FROM Ciudades 
+                                            ORDER BY PaisId, NombreCiudad 
+                                            OFFSET @cantidadDeRegistros ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
+                    using (var comando = new SqlCommand(selectQuery, _conn))//los parametros del command deben ir en este orden
+                    {
+                        comando.Parameters.Add("@cantidadDeRegistros", SqlDbType.Int);
+                        comando.Parameters["@cantidadDeRegistros"].Value = cantidad * (paginaActual - 1);//para que no me salte ningun registro hago la cuenta esa
+
+                        comando.Parameters.Add("@cantidadPorPagina", SqlDbType.Int);
+                        comando.Parameters["@cantidadPorPagina"].Value = cantidad;
+                        using (var reader = comando.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var ciudad = ConstruirCiudad(reader);
+                                lista.Add(ciudad);
+                            }
+                        }
+                    }
+                }
+                return lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

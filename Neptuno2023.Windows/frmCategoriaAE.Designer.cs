@@ -35,8 +35,8 @@
             this.textDescripcion = new System.Windows.Forms.TextBox();
             this.labelNuevaCategoria = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnOK = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,19 +76,6 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Descripcion:";
             // 
-            // btnOK
-            // 
-            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOK.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.Image")));
-            this.btnOK.Location = new System.Drawing.Point(83, 161);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(62, 53);
-            this.btnOK.TabIndex = 4;
-            this.btnOK.Text = "OK";
-            this.btnOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
             // btnCancelar
             // 
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -101,6 +88,19 @@
             this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // btnOK
+            // 
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOK.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.Image")));
+            this.btnOK.Location = new System.Drawing.Point(83, 161);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(62, 53);
+            this.btnOK.TabIndex = 4;
+            this.btnOK.Text = "OK";
+            this.btnOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // frmCategoriaAE
             // 

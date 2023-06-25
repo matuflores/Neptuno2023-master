@@ -184,6 +184,7 @@
             this.dgvDatosCategoria.Location = new System.Drawing.Point(0, 0);
             this.dgvDatosCategoria.Name = "dgvDatosCategoria";
             this.dgvDatosCategoria.ReadOnly = true;
+            this.dgvDatosCategoria.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDatosCategoria.Size = new System.Drawing.Size(800, 304);
             this.dgvDatosCategoria.TabIndex = 0;
             // 

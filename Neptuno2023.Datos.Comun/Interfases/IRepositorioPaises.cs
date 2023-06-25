@@ -18,5 +18,7 @@ namespace Neptuno2023.Datos.Comun.Interfases
         bool Existe(Pais pais);
         void Borrar(int PaisId);
         Pais GetPaisPorId(int paisId);
+
+        List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual);
     }
 }

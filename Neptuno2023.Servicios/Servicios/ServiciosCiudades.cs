@@ -99,6 +99,24 @@ namespace Neptuno2023.Servicios.Servicios
             }
         }
 
+        public List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual)
+        {
+            try
+            {
+                var lista = _repositorioCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
+                foreach (var item in lista)//aca me salia un error porque en el IRepositorio cuando se creo el metodo se creo como object y tiene que ser una List
+                {
+                    item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId);
+                }
+                return lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public void Guardar(Ciudad ciudad)
         {
             try

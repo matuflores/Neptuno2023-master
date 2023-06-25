@@ -102,5 +102,17 @@ namespace Neptuno2023.Servicios.Servicios
                 throw;
             }
         }
+        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual)
+        {//lo mismo que el metodo GetPaises, solo con modificaciones
+            try
+            {
+                return _repositorioPaises.GetPaisesPorPagina(cantidad,paginaActual); 
+            }
+            catch (Exception ex)
+            {                
+                Console.WriteLine(ex);
+                throw;
+            }
+        }
     }
 }
