@@ -40,6 +40,6 @@ namespace Neptuno2023.Servicios.Servicios
 
                 throw;
             }
-        }
+}
     }
 }
