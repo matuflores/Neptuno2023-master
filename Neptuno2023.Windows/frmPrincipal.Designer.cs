@@ -29,36 +29,25 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
-            this.btnSalir = new System.Windows.Forms.Button();
-            this.btnPaises = new System.Windows.Forms.Button();
+            this.btnClientes = new System.Windows.Forms.Button();
             this.btnCategorias = new System.Windows.Forms.Button();
             this.btnCiudades = new System.Windows.Forms.Button();
+            this.btnPaises = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnSalir
+            // btnClientes
             // 
-            this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.Image = ((System.Drawing.Image)(resources.GetObject("btnSalir.Image")));
-            this.btnSalir.Location = new System.Drawing.Point(733, 380);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(55, 58);
-            this.btnSalir.TabIndex = 0;
-            this.btnSalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            // 
-            // btnPaises
-            // 
-            this.btnPaises.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPaises.Image = ((System.Drawing.Image)(resources.GetObject("btnPaises.Image")));
-            this.btnPaises.Location = new System.Drawing.Point(64, 38);
-            this.btnPaises.Name = "btnPaises";
-            this.btnPaises.Size = new System.Drawing.Size(76, 79);
-            this.btnPaises.TabIndex = 1;
-            this.btnPaises.Text = "Paises";
-            this.btnPaises.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnPaises.UseVisualStyleBackColor = true;
-            this.btnPaises.Click += new System.EventHandler(this.btnPaises_Click);
+            this.btnClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClientes.Image = global::Neptuno2023.Windows.Properties.Resources.user_50px;
+            this.btnClientes.Location = new System.Drawing.Point(162, 135);
+            this.btnClientes.Name = "btnClientes";
+            this.btnClientes.Size = new System.Drawing.Size(76, 79);
+            this.btnClientes.TabIndex = 2;
+            this.btnClientes.Text = "Clientes";
+            this.btnClientes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnClientes.UseVisualStyleBackColor = true;
+            this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
             // 
             // btnCategorias
             // 
@@ -86,19 +75,44 @@
             this.btnCiudades.UseVisualStyleBackColor = true;
             this.btnCiudades.Click += new System.EventHandler(this.btnCiudades_Click);
             // 
+            // btnPaises
+            // 
+            this.btnPaises.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPaises.Image = ((System.Drawing.Image)(resources.GetObject("btnPaises.Image")));
+            this.btnPaises.Location = new System.Drawing.Point(64, 38);
+            this.btnPaises.Name = "btnPaises";
+            this.btnPaises.Size = new System.Drawing.Size(76, 79);
+            this.btnPaises.TabIndex = 1;
+            this.btnPaises.Text = "Paises";
+            this.btnPaises.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPaises.UseVisualStyleBackColor = true;
+            this.btnPaises.Click += new System.EventHandler(this.btnPaises_Click);
+            // 
+            // btnSalir
+            // 
+            this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSalir.Image = ((System.Drawing.Image)(resources.GetObject("btnSalir.Image")));
+            this.btnSalir.Location = new System.Drawing.Point(733, 380);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(55, 58);
+            this.btnSalir.TabIndex = 0;
+            this.btnSalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.btnClientes);
             this.Controls.Add(this.btnCategorias);
             this.Controls.Add(this.btnCiudades);
             this.Controls.Add(this.btnPaises);
             this.Controls.Add(this.btnSalir);
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Form1";
             this.ResumeLayout(false);
 
         }
@@ -109,6 +123,7 @@
         private System.Windows.Forms.Button btnPaises;
         private System.Windows.Forms.Button btnCategorias;
         private System.Windows.Forms.Button btnCiudades;
+        private System.Windows.Forms.Button btnClientes;
     }
 }
 

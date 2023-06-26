@@ -18,5 +18,6 @@ namespace Neptuno2023.Datos.Comun.Interfases
         void Borrar(int ciudadId);
         List<Ciudad> Filtrar(Pais pais);
         List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual);// esto se crear como un OBJECT por eso hay que cambiarlo a una list
+        Ciudad GetCiudadPorId(int ciudadId);
     }
 }

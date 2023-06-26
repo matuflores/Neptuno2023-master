@@ -39,5 +39,11 @@ namespace Neptuno2023.Windows
             frmCiudades frm=new frmCiudades();
             frm.ShowDialog();
         }
+
+        private void btnClientes_Click(object sender, EventArgs e)
+        {
+            frmClientes frm = new frmClientes();
+            frm.ShowDialog();
+        }
     }
 }

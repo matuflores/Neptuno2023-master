@@ -165,16 +165,6 @@ namespace Neptuno2023.Datos.Sql.Repositorios
             }
         }
 
-        private Ciudad ConstruirCiudad(SqlDataReader reader)
-        {
-            return new Ciudad()//esto lo uso en otro lugares por lo que puedo hacer un metodo para reutilizar
-            {
-                CiudadId = reader.GetInt32(0),//leo la primer columna en sql
-                PaisId = reader.GetInt32(1),//leo la segunda columna 
-                NombreCiudad = reader.GetString(2)
-            };
-        }
-
         public int GetCantidad()
         {
             int cantidad = 0;
@@ -258,6 +248,53 @@ namespace Neptuno2023.Datos.Sql.Repositorios
 
                 throw;
             }
+        }
+
+        public Ciudad GetCiudadPorId(int ciudadId)
+        {
+            
+            
+                Ciudad ciudad = null;
+                using (var _conn = new SqlConnection(cadenaDeConexion))
+                {
+                    _conn.Open();
+                    string selectQuery = "SELECT CiudadId, NombreCiudad FROM Ciudades WHERE CiudadId=@CiudadId";
+                    using (var comando = new SqlCommand(selectQuery, _conn))//los parametros del command deben ir en este orden
+                    {
+                        comando.Parameters.Add("@CiudadId", SqlDbType.Int);
+                        comando.Parameters["@CiudadId"].Value=ciudadId;
+
+                        using (var reader = comando.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                ciudad=ConstruirCiudadId(reader);
+                            }
+                        }
+                    }
+                }
+                return ciudad;
+            
+        }
+
+        public Ciudad ConstruirCiudadId(SqlDataReader reader)
+        {
+            return new Ciudad()
+            {
+                CiudadId = reader.GetInt32(0),
+                NombreCiudad = reader.GetString(1),
+            };
+        }
+
+        public Ciudad ConstruirCiudad(SqlDataReader reader)
+        {
+            return new Ciudad()
+            {
+                CiudadId = reader.GetInt32(0),
+                PaisId = reader.GetInt32(1),
+                NombreCiudad = reader.GetString(2),
+            };
         }
     }
 }

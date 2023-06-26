@@ -1,4 +1,5 @@
 ﻿using Neptuno2023.Entidades.Entidades;
+using Neptuno2023.Servicios.Interfases;
 using Neptuno2023.Servicios.Servicios;
 using Neptuno2023.Windows.Helpers;
 using System;
@@ -15,12 +16,15 @@ namespace Neptuno2023.Windows
 {
     public partial class frmCiudadAE : Form
     {
-        public frmCiudadAE()
+        private readonly IServiciosCiudades _serviciosCiudades;//le paso el servicio para poder agregar una ciudad desde este formulario (anule las lineas del btnNuevo del frmCiudades)
+        public frmCiudadAE(IServiciosCiudades serviciosCiudades)//(*96) van con lo de abajo
         {
+            _serviciosCiudades=serviciosCiudades;//preguntar esto a carlos bien como trabaja******(*96)
             InitializeComponent();
         }
 
         private Ciudad ciudad;
+        private bool esEdicion = false;//Lo instancio para el agregar desde frmCiudadAE, (**33) LO CREO PARA QUE CUANDO SEA UNA EDICION EL FRM NO SE QUEDE UNA VEZ QUE PONGO OK
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -34,6 +38,7 @@ namespace Neptuno2023.Windows
             {
                 textBoxCiudad.Text = ciudad.NombreCiudad;
                 cbPaises.SelectedValue = ciudad.PaisId;
+                esEdicion=true;//lo pongo verdadero porque a la ciuda al no ser nula es porque existe por lo que va a ser una "Edicion" (**33)
             }
         }
 
@@ -50,8 +55,49 @@ namespace Neptuno2023.Windows
                 ciudad.Pais=(Pais)cbPaises.SelectedItem;//el select item me devuelve un objet y si tengo que asignar un pais lo debo castear a pais
                 ciudad.PaisId=(int)cbPaises.SelectedValue;//apunta al id del pais, tengo que castearlo porque me devuelve un objet
 
-                DialogResult = DialogResult.OK;
+                //DialogResult = DialogResult.OK;
+                try
+                {
+                    if (!_serviciosCiudades.Existe(ciudad))
+                    {
+                        _serviciosCiudades.Guardar(ciudad);
+
+                        if (!esEdicion)// (**33)
+                        {
+                            MessageBox.Show("Registro agregado","Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            DialogResult dr = MessageBox.Show("¿Desea agregar otro registro?","Pregunta",MessageBoxButtons.YesNo, MessageBoxIcon.Question,MessageBoxDefaultButton.Button2);
+                            if (dr == DialogResult.No)
+                            {
+                                DialogResult = DialogResult.OK;
+
+                            }
+                            ciudad = null;
+                            InicializarControles();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Registro editado", "Mensaje",MessageBoxButtons.OK, MessageBoxIcon.Information);DialogResult = DialogResult.OK;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Registro duplicado","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);ciudad = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+        }
+
+        private void InicializarControles()
+        {
+            cbPaises.SelectedIndex = 0;
+            textBoxCiudad.Clear();
+            cbPaises.Focus();
         }
 
         private bool ValidarDatos()

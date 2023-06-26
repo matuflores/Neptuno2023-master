@@ -1,4 +1,5 @@
-﻿using Neptuno2023.Entidades.Entidades;
+﻿using Neptuno2023.Entidades.Dtos.Cliente;
+using Neptuno2023.Entidades.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,11 @@ namespace Neptuno2023.Windows.Helpers
                 case Categoria categoria:
                     r.Cells[0].Value = categoria.NombreCategoria;//a la fila le digo que voy a seleccionar la celda/columna que le indico y uso el index para la posicion, uso el value para decirle que va a tomar el valor que le paso. del objeto categoria le voy asignar el valor del atributo que le indicop
                     r.Cells[1].Value = categoria.Descripcion;
+                    break;
+                case ClienteListDto cliente:
+                    r.Cells[0].Value = cliente.NombreCliente;
+                    r.Cells[1].Value = cliente.NombrePais;
+                    r.Cells[2].Value = cliente.NombreCiudad;
                     break;
 
             }

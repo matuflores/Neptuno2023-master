@@ -40,20 +40,20 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.panelInferior = new System.Windows.Forms.Panel();
+            this.btnPagUltima = new System.Windows.Forms.Button();
+            this.btnPagSiguiente = new System.Windows.Forms.Button();
+            this.btnPagAnterior = new System.Windows.Forms.Button();
+            this.btnPagPrimera = new System.Windows.Forms.Button();
+            this.labelPagTotal = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelNumPagina = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.labelCantidadRegistro = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelGrilla = new System.Windows.Forms.Panel();
             this.dgvDatos = new System.Windows.Forms.DataGridView();
             this.colNombrePaises = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNombreCiudad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label2 = new System.Windows.Forms.Label();
-            this.labelNumPagina = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.labelPagTotal = new System.Windows.Forms.Label();
-            this.btnPagPrimera = new System.Windows.Forms.Button();
-            this.btnPagAnterior = new System.Windows.Forms.Button();
-            this.btnPagSiguiente = new System.Windows.Forms.Button();
-            this.btnPagUltima = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.panelInferior.SuspendLayout();
             this.panelGrilla.SuspendLayout();
@@ -188,6 +188,86 @@
             this.panelInferior.Size = new System.Drawing.Size(867, 95);
             this.panelInferior.TabIndex = 1;
             // 
+            // btnPagUltima
+            // 
+            this.btnPagUltima.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagUltima.Image = global::Neptuno2023.Windows.Properties.Resources.next_page_35px;
+            this.btnPagUltima.Location = new System.Drawing.Point(536, 22);
+            this.btnPagUltima.Name = "btnPagUltima";
+            this.btnPagUltima.Size = new System.Drawing.Size(50, 45);
+            this.btnPagUltima.TabIndex = 6;
+            this.btnPagUltima.UseVisualStyleBackColor = true;
+            this.btnPagUltima.Click += new System.EventHandler(this.btnPagUltima_Click);
+            // 
+            // btnPagSiguiente
+            // 
+            this.btnPagSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagSiguiente.Image = global::Neptuno2023.Windows.Properties.Resources.circled_play_35px;
+            this.btnPagSiguiente.Location = new System.Drawing.Point(462, 22);
+            this.btnPagSiguiente.Name = "btnPagSiguiente";
+            this.btnPagSiguiente.Size = new System.Drawing.Size(50, 45);
+            this.btnPagSiguiente.TabIndex = 6;
+            this.btnPagSiguiente.UseVisualStyleBackColor = true;
+            this.btnPagSiguiente.Click += new System.EventHandler(this.btnPagSiguiente_Click);
+            // 
+            // btnPagAnterior
+            // 
+            this.btnPagAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagAnterior.Image = global::Neptuno2023.Windows.Properties.Resources.pause_button_35px;
+            this.btnPagAnterior.Location = new System.Drawing.Point(395, 22);
+            this.btnPagAnterior.Name = "btnPagAnterior";
+            this.btnPagAnterior.Size = new System.Drawing.Size(50, 45);
+            this.btnPagAnterior.TabIndex = 6;
+            this.btnPagAnterior.UseVisualStyleBackColor = true;
+            this.btnPagAnterior.Click += new System.EventHandler(this.btnPagAnterior_Click);
+            // 
+            // btnPagPrimera
+            // 
+            this.btnPagPrimera.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagPrimera.Image = global::Neptuno2023.Windows.Properties.Resources.back_to_35px;
+            this.btnPagPrimera.Location = new System.Drawing.Point(323, 22);
+            this.btnPagPrimera.Name = "btnPagPrimera";
+            this.btnPagPrimera.Size = new System.Drawing.Size(50, 45);
+            this.btnPagPrimera.TabIndex = 6;
+            this.btnPagPrimera.UseVisualStyleBackColor = true;
+            this.btnPagPrimera.Click += new System.EventHandler(this.btnPagPrimera_Click);
+            // 
+            // labelPagTotal
+            // 
+            this.labelPagTotal.AutoSize = true;
+            this.labelPagTotal.Location = new System.Drawing.Point(136, 54);
+            this.labelPagTotal.Name = "labelPagTotal";
+            this.labelPagTotal.Size = new System.Drawing.Size(13, 13);
+            this.labelPagTotal.TabIndex = 5;
+            this.labelPagTotal.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(111, 54);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(19, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "de";
+            // 
+            // labelNumPagina
+            // 
+            this.labelNumPagina.AutoSize = true;
+            this.labelNumPagina.Location = new System.Drawing.Point(92, 54);
+            this.labelNumPagina.Name = "labelNumPagina";
+            this.labelNumPagina.Size = new System.Drawing.Size(13, 13);
+            this.labelNumPagina.TabIndex = 3;
+            this.labelNumPagina.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(38, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Página:";
+            // 
             // labelCantidadRegistro
             // 
             this.labelCantidadRegistro.AutoSize = true;
@@ -244,86 +324,6 @@
             this.colNombreCiudad.HeaderText = "Ciudad";
             this.colNombreCiudad.Name = "colNombreCiudad";
             this.colNombreCiudad.ReadOnly = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(38, 54);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Página:";
-            // 
-            // labelNumPagina
-            // 
-            this.labelNumPagina.AutoSize = true;
-            this.labelNumPagina.Location = new System.Drawing.Point(92, 54);
-            this.labelNumPagina.Name = "labelNumPagina";
-            this.labelNumPagina.Size = new System.Drawing.Size(13, 13);
-            this.labelNumPagina.TabIndex = 3;
-            this.labelNumPagina.Text = "0";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(111, 54);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(19, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "de";
-            // 
-            // labelPagTotal
-            // 
-            this.labelPagTotal.AutoSize = true;
-            this.labelPagTotal.Location = new System.Drawing.Point(136, 54);
-            this.labelPagTotal.Name = "labelPagTotal";
-            this.labelPagTotal.Size = new System.Drawing.Size(13, 13);
-            this.labelPagTotal.TabIndex = 5;
-            this.labelPagTotal.Text = "0";
-            // 
-            // btnPagPrimera
-            // 
-            this.btnPagPrimera.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPagPrimera.Image = global::Neptuno2023.Windows.Properties.Resources.back_to_35px;
-            this.btnPagPrimera.Location = new System.Drawing.Point(323, 22);
-            this.btnPagPrimera.Name = "btnPagPrimera";
-            this.btnPagPrimera.Size = new System.Drawing.Size(50, 45);
-            this.btnPagPrimera.TabIndex = 6;
-            this.btnPagPrimera.UseVisualStyleBackColor = true;
-            this.btnPagPrimera.Click += new System.EventHandler(this.btnPagPrimera_Click);
-            // 
-            // btnPagAnterior
-            // 
-            this.btnPagAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPagAnterior.Image = global::Neptuno2023.Windows.Properties.Resources.pause_button_35px;
-            this.btnPagAnterior.Location = new System.Drawing.Point(395, 22);
-            this.btnPagAnterior.Name = "btnPagAnterior";
-            this.btnPagAnterior.Size = new System.Drawing.Size(50, 45);
-            this.btnPagAnterior.TabIndex = 6;
-            this.btnPagAnterior.UseVisualStyleBackColor = true;
-            this.btnPagAnterior.Click += new System.EventHandler(this.btnPagAnterior_Click);
-            // 
-            // btnPagSiguiente
-            // 
-            this.btnPagSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPagSiguiente.Image = global::Neptuno2023.Windows.Properties.Resources.circled_play_35px;
-            this.btnPagSiguiente.Location = new System.Drawing.Point(462, 22);
-            this.btnPagSiguiente.Name = "btnPagSiguiente";
-            this.btnPagSiguiente.Size = new System.Drawing.Size(50, 45);
-            this.btnPagSiguiente.TabIndex = 6;
-            this.btnPagSiguiente.UseVisualStyleBackColor = true;
-            this.btnPagSiguiente.Click += new System.EventHandler(this.btnPagSiguiente_Click);
-            // 
-            // btnPagUltima
-            // 
-            this.btnPagUltima.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPagUltima.Image = global::Neptuno2023.Windows.Properties.Resources.next_page_35px;
-            this.btnPagUltima.Location = new System.Drawing.Point(536, 22);
-            this.btnPagUltima.Name = "btnPagUltima";
-            this.btnPagUltima.Size = new System.Drawing.Size(50, 45);
-            this.btnPagUltima.TabIndex = 6;
-            this.btnPagUltima.UseVisualStyleBackColor = true;
-            this.btnPagUltima.Click += new System.EventHandler(this.btnPagUltima_Click);
             // 
             // frmCiudades
             // 

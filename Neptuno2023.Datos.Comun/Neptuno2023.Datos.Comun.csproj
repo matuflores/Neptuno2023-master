@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Interfases\IRepositorioCategorias.cs" />
     <Compile Include="Interfases\IRepositorioCiudades.cs" />
+    <Compile Include="Interfases\IRepositorioClientes.cs" />
     <Compile Include="Interfases\IRepositorioPaises.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

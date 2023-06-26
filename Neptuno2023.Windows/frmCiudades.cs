@@ -97,39 +97,42 @@ namespace Neptuno2023.Windows
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            frmCiudadAE frm= new frmCiudadAE() //////////----------
+            frmCiudadAE frm= new frmCiudadAE(_serviciosCiudades) //////////----------
             {
                 Text="Agregar Ciudad"
             };
             DialogResult dr= frm.ShowDialog(this);//////////----------
-            if (dr == DialogResult.Cancel)
-            {
-                return;
-            }
-            try
-            {
-                Ciudad ciudad = frm.GetCiudad();
-                if (!_serviciosCiudades.Existe(ciudad))
-                {
-                    //si la ciudad no existe
-                    _serviciosCiudades.Guardar(ciudad);
-                    //una vez que se agrego tengo que mostrarla
-                    var r = GripHelper.ConstruirFila(dgvDatos);
-                    GripHelper.SetearFila(r,ciudad);
-                    GripHelper.AgregarFila(dgvDatos, r);
-                    labelCantidadRegistro.Text = _serviciosCiudades.GetCantidad().ToString();
-                    MessageBox.Show("Registro Agregado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
 
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //ESTO LO ANULO PORQUE LO PASE AL frmCiudadAE al btnOK
+            //if (dr == DialogResult.Cancel)
+            //{
+            //    return;
+            //}
+            //try
+            //{
+            //    Ciudad ciudad = frm.GetCiudad();
+            //    if (!_serviciosCiudades.Existe(ciudad))
+            //    {
+            //        //si la ciudad no existe
+            //        _serviciosCiudades.Guardar(ciudad);
+            //        //una vez que se agrego tengo que mostrarla
+            //        var r = GripHelper.ConstruirFila(dgvDatos);
+            //        GripHelper.SetearFila(r,ciudad);
+            //        GripHelper.AgregarFila(dgvDatos, r);
+            //        labelCantidadRegistro.Text = _serviciosCiudades.GetCantidad().ToString();
+            //        MessageBox.Show("Registro Agregado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            RecargarGrilla();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -144,7 +147,7 @@ namespace Neptuno2023.Windows
             try
             {
 
-                frmCiudadAE frm = new frmCiudadAE()
+                frmCiudadAE frm = new frmCiudadAE(_serviciosCiudades)//como instancie en el frm que recibe el servicio se lo tengo que pasar cada ves que lo llame
                 {
                     Text = "Editar Ciudad"
                 };//para poder editar lo tengo que pasar al formulario
@@ -153,25 +156,29 @@ namespace Neptuno2023.Windows
                                                    //ahora preguntamos 
                 if (dr == DialogResult.Cancel)
                 {
+                    GripHelper.SetearFila(r, ciudadCopia);
                     return;
                 }
                 //caso contrario si no aprete cancel es porque modifique un pais y lo debo agregar
                 ciudad = frm.GetCiudad();//tengo mi nuevo pais
                                      //el formulario le pide a servicios que lo guarde
-                if (!_serviciosCiudades.Existe(ciudad))
-                {
-                    _serviciosCiudades.Guardar(ciudad);
+                GripHelper.SetearFila(r, ciudad);//(*128)
+
+                //todo esto esta anulado porque todo el trabajo lo esta haciendo el "btnOK" del frmCiudadAE
+                //if (!_serviciosCiudades.Existe(ciudad))
+                //{
+                //    _serviciosCiudades.Guardar(ciudad);
                     //una vez que guardo el pais, tewngo que setear fila con el nuevo pais
-                    GripHelper.SetearFila(r, ciudad);//(*128)
-                    MessageBox.Show("Ciudad Editada satisfactoriamente",
-                        "Mensaje",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    GripHelper.SetearFila(r, ciudadCopia);//(*128)
-                    MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    //GripHelper.SetearFila(r, ciudad);//(*128)
+                //    MessageBox.Show("Ciudad Editada satisfactoriamente",
+                //        "Mensaje",
+                //        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+                //else
+                //{
+                //    GripHelper.SetearFila(r, ciudadCopia);//(*128)
+                //    MessageBox.Show("Registro Duplicado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
 
                 //como todo esto implica que debo acceder a la tabla deberia agregarlos con un try
             }

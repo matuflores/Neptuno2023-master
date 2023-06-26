@@ -43,10 +43,12 @@
   <ItemGroup>
     <Compile Include="Interfases\IServiciosCategorias.cs" />
     <Compile Include="Interfases\IServiciosCiudades.cs" />
+    <Compile Include="Interfases\IServiciosClientes.cs" />
     <Compile Include="Interfases\IServiciosPaises.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\ServiciosCategorias.cs" />
     <Compile Include="Servicios\ServiciosCiudades.cs" />
+    <Compile Include="Servicios\ServiciosClientes.cs" />
     <Compile Include="Servicios\ServiciosPaises.cs" />
   </ItemGroup>
   <ItemGroup>
